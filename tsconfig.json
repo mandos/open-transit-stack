@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/ippo-cli"
+    },
+    {
+      "path": "./libs/gtfs/io"
+    },
+    {
+      "path": "./libs/gtfs/core"
+    },
+    {
+      "path": "./libs/gtfs/query"
+    },
+    {
+      "path": "./libs/gtfs/validate"
+    }
+  ]
+}
