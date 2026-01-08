@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 
-import { cli, Output } from './cli/cli.js';
-
-const consoleOutput: Output = {
-  out: msg => { process.stdout.write(msg + "\n") },
-  err: msg => { process.stderr.write(msg + "\n") },
-}
+import { log } from 'console';
+import { consoleOutput } from './common.js';
+import { cli } from './cli/cli.js';
 
 async function main() {
+  log(process.argv);
   const exitCode = await cli(process.argv.slice(2), consoleOutput);
   process.exit(exitCode);
 }
 
-main()
+main();

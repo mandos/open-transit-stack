@@ -1,4 +1,4 @@
-import { cli, ExitCode } from "./cli.js"
+import { cli, ExitCode } from "./cli.js";
 
 function createMockOutput() {
   const stdout = [] as string[];
@@ -10,16 +10,16 @@ function createMockOutput() {
     err(msg: string) {
       stderr.push(msg);
     }
-  }
-  return { output, stdout, stderr }
+  };
+  return { output, stdout, stderr };
 };
 
 describe('run not existed command', () => {
   it('should display error when application does\'t have command', async () => {
-    const { output, stdout, stderr } = createMockOutput()
-    const exitCode = await cli(["not-existed-command"], output)
-    expect(stdout.join()).toMatch('')
-    expect(stderr.join()).toMatch(/not-existed-command/i)
-    expect(exitCode).toBe(ExitCode.InvalidArgs)
-  })
-})
+    const { output, stdout, stderr } = createMockOutput();
+    const exitCode = await cli(["not-existed-command"], output);
+    expect(stdout.join()).toMatch('');
+    expect(stderr.join()).toMatch(/not-existed-command/i);
+    expect(exitCode).toBe(ExitCode.InvalidArgs);
+  });
+});

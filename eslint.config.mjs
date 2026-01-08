@@ -15,7 +15,9 @@ export default [
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+
     rules: {
+      semi: ["error", "always"],
       '@nx/enforce-module-boundaries': [
         'error',
         {
