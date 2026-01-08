@@ -5,7 +5,7 @@ type FileStatus = {
 }
 
 export function validateFiles(files: string[]): Map<string, FileStatus> {
-  const validated = new Map<string, FileStatus>
+  const validated = new Map<string, FileStatus>;
 
   // console.log(GTFS_FILES);
   for (const file of GTFS_FILES.keys()) {
@@ -20,5 +20,5 @@ export function validateFiles(files: string[]): Map<string, FileStatus> {
     }
   }
 
-  return validated
+  return validated;
 }

@@ -1,2 +1,2 @@
 export * from './lib/validate.js';
-export * from './lib/files.js'
+export * from './lib/files.js';

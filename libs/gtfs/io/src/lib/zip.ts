@@ -1,4 +1,3 @@
-import { rejects } from "node:assert";
 import { createWriteStream, type PathLike } from "node:fs";
 import { open } from "node:fs/promises";
 import * as path from "node:path";
@@ -6,10 +5,10 @@ import * as yauzl from "yauzl/index.js";
 
 export async function isZipFile(path: PathLike): Promise<boolean> {
   // console.log(path)
-  const fd = await open(path, "r")
+  const fd = await open(path, "r");
   try {
-    const buffer = Buffer.alloc(4)
-    await fd.read(buffer)
+    const buffer = Buffer.alloc(4);
+    await fd.read(buffer);
     // 4 bytes for zip file, two are same, third is different based on type of zip file
     // 50 4B 03 04 — standard ZIP
     // 50 4B 05 06 — empty ZIP archive
@@ -22,7 +21,7 @@ export async function isZipFile(path: PathLike): Promise<boolean> {
         buffer[2] === 0x07)
     );
   } finally {
-    fd.close()
+    fd.close();
   }
 }
 
@@ -34,10 +33,10 @@ export async function extract(filePath: string, outputDir: string): Promise<stri
       // console.log("number of entries:", zipfile.entryCount);
       if (err) {
         reject(err);
-        return
+        return;
       }
 
-      zipfile.readEntry()
+      zipfile.readEntry();
       zipfile.on("entry", function (entry: yauzl.Entry) {
         if (/\/$/.test(entry.fileName)) {
           // console.log("I'm in?")
@@ -51,14 +50,11 @@ export async function extract(filePath: string, outputDir: string): Promise<stri
             if (err || !readStream) reject(err);
             const writeStream = createWriteStream(destPath);
             readStream.pipe(writeStream);
-          })
+          });
 
           files.push(entry.fileName);
           zipfile.readEntry();
         }
-      })
-
-      zipfile.on("end", function () {
       });
 
       zipfile.on("close", function () {
@@ -66,8 +62,8 @@ export async function extract(filePath: string, outputDir: string): Promise<stri
       });
 
       zipfile.on("error", function () {
-        reject(new Error("I have no idea, but there is error!"))
+        reject(new Error("I have no idea, but there is error!"));
       });
-    })
-  })
+    });
+  });
 }
