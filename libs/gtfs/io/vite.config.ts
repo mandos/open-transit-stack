@@ -10,7 +10,7 @@ export default defineConfig(() => ({
   //  plugins: [],
   // },
   test: {
-    name: '@mandos-dev/io',
+    name: '@mandos-dev/gtfs-io',
     watch: false,
     globals: true,
     environment: 'node',

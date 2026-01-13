@@ -48,10 +48,7 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      },
-      "exclude": [
-        "libs/gtfs/io/*"
-      ]
+      }
     },
     {
       "plugin": "@nx/eslint/plugin",
@@ -89,9 +86,6 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": [
-        "libs/gtfs/io/*"
-      ],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
