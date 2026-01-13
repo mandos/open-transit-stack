@@ -3,7 +3,7 @@ export interface Command {
   name: string;
   description: string;
   usage: string;
-  run(args: ParsedInputs): Promise<number>;
+  run(args: string[]): Promise<number>;
 }
 
 export enum ExitCode {

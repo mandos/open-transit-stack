@@ -10,19 +10,19 @@ function parseInputs(argv: string[]): ParsedInputs {
 
 function route(
   commands: Command[],
-  input: ParsedInputs,
+  command: string
 ): Command | null {
-  return commands.find(c => c.name === input.command) ?? null;
+  return commands.find(c => c.name === command) ?? null;
 }
 
 export async function cli(argv: string[], output: Output): Promise<number> {
   const input = parseInputs(argv);
   const commands: Command[] = [showCommand];
-  const cmd = route(commands, input);
+  const cmd = route(commands, input.command);
 
   if (!cmd) {
     output.err(`Command ${input.command} not found.`);
     return ExitCode.InvalidArgs;
   }
-  return cmd.run(input);
+  return cmd.run(input.args);
 }

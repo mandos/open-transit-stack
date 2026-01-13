@@ -3,18 +3,34 @@ import { validateFilesList } from '@mandos-dev/gtfs-validate';
 import { mkdir, mkdtemp } from 'fs/promises';
 import { tmpdir } from 'os';
 import path from 'path';
-import { Command, consoleOutput, ExitCode, ParsedInputs } from '../common.js';
+import { Command, consoleOutput, ExitCode } from '../common.js';
+import { parseArgs } from 'util';
+
+
+const options = {
+  file: {
+    type: "string",
+    short: "f",
+  },
+  help: {
+    type: "boolean",
+    short: "h",
+    default: false,
+  }
+} as const;
 
 export const showCommand: Command = {
   name: "show",
   description: "Show information about zip package",
   usage: "you can figure out",
-  run: async (args: ParsedInputs) => {
+  run: async (args: string[]) => {
     // create folder in tmp, based on hash?
     //
     try {
+      const { values, positionals, } = parseArgs({ args, options });
+      console.log(values, positionals);
       // TODO: Create way to parse args
-      const zipFilePath = path.resolve(args.args[1]);
+      const zipFilePath = path.resolve(args[1]);
       // TODO: Move creating tmp folder to generic IO lib
       const tmpDir = path.join(tmpdir(), "ippo-cli");
       await mkdir(tmpDir, { recursive: true });
