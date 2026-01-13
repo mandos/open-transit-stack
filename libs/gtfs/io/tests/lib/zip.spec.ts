@@ -21,6 +21,12 @@ describe("extract", () => {
   const expected_files = ["file-1.txt", "file-2.txt", "file-3.txt"];
   const zipFile = path.join(__dirname, "../fixtures", "zip-file.zip");
 
+  it("should reject wrong path", async () => {
+    const file = path.join("not-existed-file");
+    const targetDir = await mkdtemp(path.join(tmpdir(), "gtfs_io_test_zip_"));
+    await expect(extract(file, targetDir)).rejects.toThrowError(/no such file or directory/);
+  });
+
   it("should reject not zip file", async () => {
     const file = path.join(__dirname, "../fixtures", "not-zip-file.zip");
     const targetDir = await mkdtemp(path.join(tmpdir(), "gtfs_io_test_zip_"));

@@ -1,1 +1,1 @@
-export * from './lib/io.js';
+export * from './lib/zip.js';

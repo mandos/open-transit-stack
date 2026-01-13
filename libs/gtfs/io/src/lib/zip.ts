@@ -1,7 +1,7 @@
-import { createWriteStream, type PathLike } from "node:fs";
+import { createWriteStream, PathLike } from "node:fs";
 import { open } from "node:fs/promises";
 import * as path from "node:path";
-import * as yauzl from "yauzl/index.js";
+import * as yauzl from "yauzl";
 
 export async function isZipFile(path: PathLike): Promise<boolean> {
   // console.log(path)
@@ -29,8 +29,7 @@ export async function extract(filePath: string, outputDir: string): Promise<stri
   const files: string[] = [];
 
   return new Promise((resolve, reject) => {
-    yauzl.open(filePath, { autoClose: true, lazyEntries: true }, function (err: Error | null, zipfile?: yauzl.ZipFile) {
-      // console.log("number of entries:", zipfile.entryCount);
+    yauzl.open(filePath, { autoClose: true, lazyEntries: true }, function (err: Error | null, zipfile: yauzl.ZipFile) {
       if (err) {
         reject(err);
         return;
