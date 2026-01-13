@@ -4,7 +4,7 @@ type FileStatus = {
   status: "present" | "missing" | "unknown"
 }
 
-export function validateFiles(files: string[]): Map<string, FileStatus> {
+export function validateFilesList(files: string[]): Map<string, FileStatus> {
   const validated = new Map<string, FileStatus>;
 
   // console.log(GTFS_FILES);
