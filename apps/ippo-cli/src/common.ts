@@ -14,7 +14,7 @@ export enum ExitCode {
 
 export interface Output {
   out(msg: string): void,
-  err(msg: string): void,
+  err(msg: string | unknown): void,
 }
 
 export interface ParsedInputs {
@@ -24,8 +24,10 @@ export interface ParsedInputs {
 
 export const consoleOutput: Output = {
   out: msg => {
-    process.stdout.write("no mercy");
     process.stdout.write(msg + "\n");
   },
-  err: msg => { process.stderr.write(msg + "\n"); },
+  err: msg => {
+    const errMsg = msg instanceof Error ? msg.message : String(msg);
+    process.stderr.write(errMsg + "\n");
+  },
 };
