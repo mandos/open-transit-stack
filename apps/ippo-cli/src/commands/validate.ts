@@ -1,6 +1,5 @@
-import { ParsedInputs } from '../common.js';
 
-export async function run(input: ParsedInputs): Promise<number> {
+export async function run(input: string[]): Promise<number> {
   console.log(input);
   // TODO: Load zip and unzip it somewere
   // TODO: Get list of folders and check all validation rules for them

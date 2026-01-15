@@ -7,27 +7,29 @@ import { Command, consoleOutput, ExitCode } from '../common.js';
 import { parseArgs } from 'util';
 
 
-const options = {
-  file: {
-    type: "string",
-    short: "f",
-  },
-  help: {
-    type: "boolean",
-    short: "h",
-    default: false,
-  }
-} as const;
-
 export const showCommand: Command = {
   name: "show",
   description: "Show information about zip package",
   usage: "you can figure out",
-  run: async (args: string[]) => {
+  argsConfig: {
+    options: {
+      file: {
+        type: "string",
+        short: "f",
+      },
+      help: {
+        type: "boolean",
+        short: "h",
+        default: false,
+      }
+    }
+  } as const,
+  async run(args: string[]) {
     // create folder in tmp, based on hash?
     //
     try {
-      const { values, positionals, } = parseArgs({ args, options });
+      this.argsConfig.args = args;
+      const { values, positionals, } = parseArgs(this.argsConfig);
       console.log(values, positionals);
       // TODO: Create way to parse args
       const zipFilePath = path.resolve(args[1]);

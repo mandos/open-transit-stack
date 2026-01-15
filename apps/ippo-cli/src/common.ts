@@ -1,9 +1,12 @@
+// NOTE:
+import { ParseArgsConfig } from "util";
 
 export interface Command {
   name: string;
   description: string;
   usage: string;
-  run(args: string[]): Promise<number>;
+  argsConfig: ParseArgsConfig;
+  run(args: string[], output: Output): Promise<number>;
 }
 
 export enum ExitCode {
@@ -15,11 +18,6 @@ export enum ExitCode {
 export interface Output {
   out(msg: string): void,
   err(msg: string | unknown): void,
-}
-
-export interface ParsedInputs {
-  command: string;
-  args: string[];
 }
 
 export const consoleOutput: Output = {
