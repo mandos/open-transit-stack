@@ -31,17 +31,17 @@ export const cli: Command = {
   async run(args: string[], output: Output): Promise<number> {
     const { values, positionals } = parseArgs({ ...this.argsConfig, args: args });
 
-    console.log(args);
-    console.log(values);
+    // console.log(args);
+    // console.log(values);
     console.log(positionals);
 
-    // const parsedVal = values as { help?: boolean };
-    // if (parsedVal.help === true) {
-    //   output.out(`Name: ${this.name}`);
-    //   output.out(`Description: ${this.description}`);
-    //   output.out(`Usage: ${this.usage}`);
-    // }
-    //
+    const parsedVal = values as { help?: boolean };
+    if (parsedVal.help === true || positionals.length === 0) {
+      output.out(`Name: ${this.name}`);
+      output.out(`Description: ${this.description}`);
+      output.out(`Usage: ${this.usage}`);
+    }
+
     const commands: Command[] = [showCommand];
     if (positionals[0]) {
       const cmd = route(commands, positionals[0]);

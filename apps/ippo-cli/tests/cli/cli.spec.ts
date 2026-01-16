@@ -1,5 +1,5 @@
-import { ExitCode } from "../common.js";
-import { cli } from '../cli/cli.js';
+import { ExitCode } from "../../src/common.js";
+import { cli } from '../../src/cli/cli.js';
 
 function createMockOutput() {
   const stdout = [] as string[];

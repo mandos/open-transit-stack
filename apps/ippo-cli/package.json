@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "bin": {
-    "ippo": "apps/ippo-cli/dist/main.js"
+    "ippo-cli": "apps/ippo-cli/dist/ippo-cli.js"
   },
   "dependencies": {}
 }

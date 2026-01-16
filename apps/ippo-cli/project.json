@@ -13,7 +13,7 @@
           "esm"
         ],
         "bundle": false,
-        "main": "apps/ippo-cli/src/main.ts",
+        "main": "apps/ippo-cli/src/ippo-cli.ts",
         "tsConfig": "apps/ippo-cli/tsconfig.app.json",
         "assets": [
           "apps/ippo-cli/src/assets"
@@ -36,6 +36,16 @@
           }
         }
       }
+    },
+    "e2e": {
+      "executor": "@nx/vitest:test",
+      "dependsOn": [
+        "build"
+      ],
+      "options": {
+        "configFile": "{workspaceRoot}/apps/ippo-cli/vitest.e2e.config.mts"
+      },
+      "cache": true
     },
     "prune-lockfile": {
       "dependsOn": [
