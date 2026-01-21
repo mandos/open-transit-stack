@@ -19,7 +19,6 @@
   ],
   "dependencies": {
     "tslib": "^2.3.0",
-    "@mandos-dev/gtfs-core": "0.0.1",
-    "vitest": "^4.0.0"
+    "@mandos-dev/gtfs-core": "0.0.1"
   }
 }

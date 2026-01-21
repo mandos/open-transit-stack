@@ -72,6 +72,9 @@
     },
     {
       "plugin": "@nx/vitest",
+      "exclude": [
+        "tests/e2e/**/*"
+      ],
       "options": {
         "testTargetName": "test",
         "ciTargetName": "test-ci",
