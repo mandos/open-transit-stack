@@ -1,9 +1,12 @@
+import { ParsedArgs } from "./parse-args.js";
 
 export interface Command {
   name: string;
   description: string;
   usage: string;
-  run(args: ParsedInputs): Promise<number>;
+
+  run(ctx: Context): Promise<number>
+  commands: Record<string, Command>
 }
 
 export enum ExitCode {
@@ -17,9 +20,9 @@ export interface Output {
   err(msg: string | unknown): void,
 }
 
-export interface ParsedInputs {
-  command: string;
-  args: string[];
+export interface Context {
+  output: Output,
+  args: ParsedArgs,
 }
 
 export const consoleOutput: Output = {

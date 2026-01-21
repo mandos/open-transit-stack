@@ -1,28 +1,20 @@
-import { ParsedInputs, Command, ExitCode, Output } from '../common.js';
-import { showCommand } from "../commands/index.js";
+import { ExitCode, Context, Command } from '../common.js';
+import { showCommand } from '../commands/show.js';
+import { helpCommand } from '../commands/help.js';
 
-function parseInputs(argv: string[]): ParsedInputs {
-  return {
-    command: argv[0],
-    args: argv.slice(1),
-  };
-}
-
-function route(
-  commands: Command[],
-  input: ParsedInputs,
-): Command | null {
-  return commands.find(c => c.name === input.command) ?? null;
-}
-
-export async function cli(argv: string[], output: Output): Promise<number> {
-  const input = parseInputs(argv);
-  const commands: Command[] = [showCommand];
-  const cmd = route(commands, input);
-
-  if (!cmd) {
-    output.err(`Command ${input.command} not found.`);
-    return ExitCode.InvalidArgs;
+// This shouldn't be run at all, cli object is only for help
+export const cli: Command = {
+  name: "ippo-cli",
+  description: "Toolbox utility for file packages in General Transit Feed Specification format.",
+  usage: `ippo-cli <command> [options]
+    Commands:
+      show: ${showCommand.description}
+`,
+  commands: {
+    show: showCommand,
+    help: helpCommand,
+  },
+  async run(ctx: Context): Promise<number> {
+    return ExitCode.Failure;
   }
-  return cmd.run(input);
-}
+};

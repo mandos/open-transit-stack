@@ -8,7 +8,7 @@ export default defineConfig(() => ({
     watch: false,
     globals: true,
     environment: 'jsdom',
-    include: ['tests/{unit,integration}/**/*.spec.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    include: ['tests/e2e/**/*.spec.ts'],
     reporters: ['default'],
     coverage: {
       reportsDirectory: './test-output/vitest/coverage',
