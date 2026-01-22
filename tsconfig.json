@@ -17,6 +17,9 @@
     },
     {
       "path": "./libs/gtfs/validate"
+    },
+    {
+      "path": "./libs/gtfs/parser"
     }
   ]
 }
