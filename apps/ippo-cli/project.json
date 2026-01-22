@@ -1,23 +1,19 @@
 {
+  "name": "@mandos-dev/ippo-cli",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
         "platform": "node",
         "outputPath": "apps/ippo-cli/dist",
-        "format": [
-          "esm"
-        ],
+        "format": ["esm"],
         "bundle": false,
         "main": "apps/ippo-cli/src/ippo-cli.ts",
         "tsConfig": "apps/ippo-cli/tsconfig.app.json",
-        "assets": [
-          "apps/ippo-cli/src/assets"
-        ],
+        "assets": ["apps/ippo-cli/src/assets"],
         "esbuildOptions": {
           "sourcemap": true,
           "outExtension": {
@@ -39,18 +35,14 @@
     },
     "e2e": {
       "executor": "@nx/vitest:test",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "options": {
         "configFile": "{workspaceRoot}/apps/ippo-cli/vitest.e2e.config.mts"
       },
       "cache": true
     },
     "prune-lockfile": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "cache": true,
       "executor": "@nx/js:prune-lockfile",
       "outputs": [
@@ -62,32 +54,23 @@
       }
     },
     "copy-workspace-modules": {
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "cache": true,
-      "outputs": [
-        "{workspaceRoot}/apps/ippo-cli/dist/workspace_modules"
-      ],
+      "outputs": ["{workspaceRoot}/apps/ippo-cli/dist/workspace_modules"],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
         "buildTarget": "build"
       }
     },
     "prune": {
-      "dependsOn": [
-        "prune-lockfile",
-        "copy-workspace-modules"
-      ],
+      "dependsOn": ["prune-lockfile", "copy-workspace-modules"],
       "executor": "nx:noop"
     },
     "serve": {
       "continuous": true,
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": [
-        "build"
-      ],
+      "dependsOn": ["build"],
       "options": {
         "buildTarget": "@mandos-dev/ippo-cli:build",
         "runBuildTargetDependencies": false

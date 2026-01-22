@@ -17,7 +17,7 @@ async function main() {
     process.exit(exitCode);
   } catch (err) {
     if (err instanceof CommandNotFoundError) {
-      consoleOutput.err(`${err.command} can't be found. Use "ippo-cli help".`)
+      consoleOutput.err(`${err.command} can't be found. Use "ippo-cli help".`);
       process.exit(ExitCode.InvalidArgs);
     }
     throw err;

@@ -1,6 +1,5 @@
 {
-  "tags": [
-    "type:io",
-    "scope:gtfs"
-  ]
+  "name": "@mandos-dev/gtfs-io",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "tags": ["type:io", "scope:gtfs"]
 }

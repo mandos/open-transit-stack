@@ -11,13 +11,13 @@ export const router = {
   route: function (root: Command, args: ParsedArgs, ctx: Context): Command {
 
     // Normalize global --help into help command
-    const options = (args.options as GlobalOptions)
+    const options = (args.options as GlobalOptions);
     if (args.commands[0] === 'help' || args.commands.length === 0) {
-      return this.get(root, ['help'])
+      return this.get(root, ['help']);
     }
 
     if (options.h || options.help) {
-      return this.get(root, ['help'])
+      return this.get(root, ['help']);
     };
     return this.get(root, args.commands);
   },
@@ -39,4 +39,4 @@ export const router = {
 
   }
 
-}
+};

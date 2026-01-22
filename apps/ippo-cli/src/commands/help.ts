@@ -20,7 +20,7 @@ export const helpCommand: Command = {
   usage: 'ippo-cli help [command]',
   commands: {},
   async run(ctx: Context): Promise<number> {
-    const options = (ctx.args.options as GlobalOptions)
+    const options = (ctx.args.options as GlobalOptions);
     if (ctx.args.commands[0] === 'help' && (ctx.args.commands.length > 1 || !(options.h || options.help))) {
       ctx.args.commands.shift();
     }

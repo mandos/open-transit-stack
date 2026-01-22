@@ -21,7 +21,7 @@ describe('show command', () => {
     expect(out.code).toBe(1);
     expect(out.stdout).toBe('');
     expect(out.stderr).toMatch(/not a zip/);
-  })
+  });
   it('with "-f=file" option should show status report for GTFS package', async () => {
     const out = await runCli(['show', `--file=${getFixtureFilePath('gtfs-sapporo.zip')}`]);
     expect(out.code).toBe(0);

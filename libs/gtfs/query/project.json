@@ -1,6 +1,5 @@
 {
-  "tags": [
-    "scope:gtfs",
-    "type:query"
-  ]
+  "name": "@mandos-dev/gtfs-query",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "tags": ["scope:gtfs", "type:query"]
 }
