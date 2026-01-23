@@ -5,7 +5,7 @@ import { tmpdir } from 'os';
 import path from 'path';
 import { Command, ExitCode, Output } from '../common.js';
 // import { parseAgencyFeed } from '@mandos-dev/gtfs-parser';
-import { parseAgencyFeed } from '@mandos-dev/gtfs-parser'
+import { parseAgencyFeed } from '@mandos-dev/gtfs-parser';
 
 type ShowOptions = {
   file: string,
@@ -33,8 +33,7 @@ export const showCommand: Command = {
       if (!options.type) {
         showFiles(fileList, output);
       } else if (options.type == "agency") {
-        showAgencyFeed(feedDir, output);
-
+        await showAgencyFeed(feedDir, output);
       }
     } catch (err) {
       console.error(err);
@@ -56,7 +55,6 @@ function showFiles(fileList: string[], output: Output) {
   }
   output.out("\n\n");
 }
-function showAgencyFeed(feedDir: string, output: Output) {
-  parseAgencyFeed(feedDir);
-
+async function showAgencyFeed(feedDir: string, output: Output) {
+  await parseAgencyFeed(feedDir);
 }

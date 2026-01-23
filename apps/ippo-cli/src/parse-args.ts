@@ -3,7 +3,7 @@ import { parseArgs, ParseArgsConfig } from "node:util";
 // NOTE: It's simple implementation and allow to put options before command, but for now I don't care (or maybe it's feature not a bug)
 export type ParsedArgs = {
   commands: string[],
-  options: {},
+  options: object,
 }
 
 const parseConfig: ParseArgsConfig = {
@@ -17,6 +17,7 @@ export function parseCliArgs(args?: string[]): ParsedArgs {
   if (args !== undefined) {
     parseConfig.args = args;
   }
+
   const result = parseArgs(parseConfig);
   // console.log(result);
 

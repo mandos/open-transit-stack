@@ -1,21 +1,7 @@
 import { mkdtemp, readdir, readFile } from 'node:fs/promises';
 import { tmpdir } from 'os';
-import { isZipFile, extract } from '../../src/lib/zip.js';
+import { extract } from '../../src/lib/zip.js';
 import path from "node:path";
-
-
-describe("isZipFile", () => {
-  it("detects Zip file", async () => {
-    const file = path.join(__dirname, "../fixtures", "zip-file.zip");
-    await expect(isZipFile(file)).resolves.toBe(true);
-
-  });
-
-  it("detects non Zip file", async () => {
-    const file = path.join(__dirname, "../fixtures", "not-zip-file.zip");
-    await expect(isZipFile(file)).resolves.toBe(false);
-  });
-});
 
 describe("extract", () => {
   const expected_files = ["file-1.txt", "file-2.txt", "file-3.txt"];

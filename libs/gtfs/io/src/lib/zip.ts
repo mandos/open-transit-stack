@@ -1,29 +1,6 @@
-import { createWriteStream, PathLike } from "node:fs";
-import { open } from "node:fs/promises";
+import { createWriteStream } from "node:fs";
 import * as path from "node:path";
 import * as yauzl from "yauzl";
-
-export async function isZipFile(path: PathLike): Promise<boolean> {
-  // console.log(path)
-  const fd = await open(path, "r");
-  try {
-    const buffer = Buffer.alloc(4);
-    await fd.read(buffer);
-    // 4 bytes for zip file, two are same, third is different based on type of zip file
-    // 50 4B 03 04 — standard ZIP
-    // 50 4B 05 06 — empty ZIP archive
-    // 50 4B 07 08 — spanned ZIP
-    return (
-      buffer[0] === 0x50 &&
-      buffer[1] === 0x4b &&
-      (buffer[2] === 0x03 ||
-        buffer[2] === 0x05 ||
-        buffer[2] === 0x07)
-    );
-  } finally {
-    fd.close();
-  }
-}
 
 export async function extract(filePath: string, outputDir: string): Promise<string[]> {
   const files: string[] = [];

@@ -19,16 +19,13 @@ export const helpCommand: Command = {
   description: "Show help for specific command.",
   usage: 'ippo-cli help [command]',
   commands: {},
-  async run(ctx: Context): Promise<number> {
+  run(ctx: Context): Promise<number> {
     const options = (ctx.args.options as GlobalOptions);
     if (ctx.args.commands[0] === 'help' && (ctx.args.commands.length > 1 || !(options.h || options.help))) {
       ctx.args.commands.shift();
     }
     const cmd = router.get(cli, ctx.args.commands);
 
-    return showHelp(ctx, cmd);
-    // } else {
-    //   return this.showHelp(ctx, cli);
-    // };
+    return Promise.resolve(showHelp(ctx, cmd));
   },
 };

@@ -15,6 +15,6 @@ export const cli: Command = {
     help: helpCommand,
   },
   async run(ctx: Context): Promise<number> {
-    return ExitCode.Failure;
+    return Promise.resolve(ExitCode.Failure);
   }
 };
