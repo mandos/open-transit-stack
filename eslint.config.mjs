@@ -18,17 +18,14 @@ export default [
     languageOptions: {
       // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
       parserOptions: {
-        project: [
-          'apps/**/tsconfig.*?.json',
-          'libs/**/tsconfig.*?.json'
-        ],
+        project: ['apps/**/tsconfig.*?.json', 'libs/**/tsconfig.*?.json'],
       },
     },
     rules: {
       semi: ['error', 'always'],
-      "@typescript-eslint/no-floating-promises": "error",
-      "@typescript-eslint/await-thenable": "error",
-      "@typescript-eslint/require-await": "error",
+      '@typescript-eslint/no-floating-promises': 'error',
+      '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/require-await': 'error',
 
       '@nx/enforce-module-boundaries': [
         'error',

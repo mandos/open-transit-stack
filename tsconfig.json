@@ -20,6 +20,9 @@
     },
     {
       "path": "./libs/gtfs/parser"
+    },
+    {
+      "path": "./libs/csv"
     }
   ]
 }

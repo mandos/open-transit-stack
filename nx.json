@@ -93,7 +93,10 @@
         "typecheck": {
           "targetName": "typecheck"
         }
-      }
+      },
+      "exclude": [
+        "libs/csv/*"
+      ]
     }
   ],
   "targetDefaults": {

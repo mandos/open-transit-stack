@@ -62,7 +62,8 @@
   },
   "workspaces": [
     "apps/*",
-    "libs/gtfs/*"
+    "libs/gtfs/*",
+    "libs/*"
   ],
   "nx": {
     "includedScripts": [],
