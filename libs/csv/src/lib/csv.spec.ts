@@ -28,11 +28,11 @@ describe('parseCsv', () => {
     const lines = async function* (): AsyncIterableIterator<string> {
       yield 'moo,42,true';
       yield 'boo,99,false';
-    }
+    };
     const expected = [
       ['moo', '42', 'true'],
       ['boo', '99', 'false'],
-    ]
+    ];
 
     const result: string[][] = [];
     for await (const row of parseCsv(lines())) {
@@ -46,11 +46,11 @@ describe('parseCsv', () => {
       yield 'header1,header2,header3';
       yield 'moo,42,true';
       yield 'boo,99,false';
-    }
+    };
     const expected = [
       { header1: 'moo', header2: '42', header3: 'true' },
       { header1: 'boo', header2: '99', header3: 'false' },
-    ]
+    ];
     const result: Record<string, string>[] = [];
     for await (const row of parseCsv(lines(), { header: true })) {
       result.push(row);

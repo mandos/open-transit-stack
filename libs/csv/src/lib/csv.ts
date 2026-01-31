@@ -12,7 +12,7 @@ export async function readCsv(path: PathLike, options: CsvOptions = { header: fa
   const rl = createInterface({
     input: createReadStream(path),
     crlfDelay: Infinity,
-  })
+  });
 
   for await (const row of parseCsv(rl, options)) {
     csv.push(row);
