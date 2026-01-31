@@ -11,7 +11,7 @@ SESSION=$(tmux display-message "#S")
 tmux set-option -s remain-on-exit off
 tmux rename-window -t "${SESSION}:0" workspace
 
-tmux split-window -h 'nx watch --all -- nx run-many -t lint --outputStyle=stream --fix'
+tmux split-window -h 'nx watch --all -- nx run-many -t lint --outputStyle=stream'
 
 tmux new-window 'nx watch --all -- nx run-many -t test --outputStyle=stream'
 tmux rename-window -t "${SESSION}:1" tests
