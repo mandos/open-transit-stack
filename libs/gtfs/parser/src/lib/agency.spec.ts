@@ -59,56 +59,6 @@ describe('parseAgencyRow', () => {
   });
 });
 
-
-// function asyncLines(lines: string[]): AsyncIterable<string> {
-//   return {
-//     async *[Symbol.asyncIterator]() {
-//       for (const line of lines) {
-//         yield line;
-//       }
-//     }
-//   };
-// }
-
-// export function mockReadLines(lines: string[]) {
-//   const close = vi.fn().mockResolvedValue(undefined);
-//   vi.mock('node:fs/promises', () => ({
-//     open: vi.fn(),
-//   }));
-
-//   vi.mocked(fs.open).mockResolvedValue({
-//     readLines: () => asyncLines(lines),
-//     close,
-//   } as any);
-// }
-
-// describe('readAgencyFeed', () => {
-//   it('should return list of objects', async () => {
-//     const csvLines = [
-//       'agency_id,agency_name,agency_url,agency_timezone,agency_lang',
-//       '1,2,3,4,5',
-//       '6,7,8,9,0',
-//     ];
-//     const expected = [
-//       {
-//         agency_id: "1",
-//         agency_name: "2",
-//         agency_url: "3",
-//         agency_timezone: "4",
-//         agency_lang: "5",
-//       },
-//       {
-//         agency_id: "6",
-//         agency_name: "7",
-//         agency_url: "8",
-//         agency_timezone: "9",
-//         agency_lang: "0",
-//       }
-//     ];
-
-//     mockReadLines(csvLines);
-
-//     await expect(readAgencyFeed('/tmp')).resolves.toStrictEqual(expected);
-
-//   });
-// });
+// REVIEW: I'm not sure if I want to write this test, and if I want, should I stub readCsv function?
+describe.todo('readAgencyFeed', () => {
+});

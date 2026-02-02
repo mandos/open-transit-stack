@@ -5,7 +5,7 @@ import { tmpdir } from 'os';
 import path from 'path';
 import { Command, ExitCode, Output } from '../common.js';
 // import { parseAgencyFeed } from '@mandos-dev/gtfs-parser';
-import { parseAgencyFeed } from '@mandos-dev/gtfs-parser';
+import { readAgencyFeed } from '@mandos-dev/gtfs-parser';
 
 type ShowOptions = {
   file: string,
@@ -55,6 +55,7 @@ function showFiles(fileList: string[], output: Output) {
   }
   output.out("\n\n");
 }
+
 async function showAgencyFeed(feedDir: string, output: Output) {
-  await parseAgencyFeed(feedDir);
+  output.out(JSON.stringify(await readAgencyFeed(feedDir), undefined, 4));
 }

@@ -1,4 +1,6 @@
 import { Agency } from '@mandos-dev/gtfs-core';
+import { PathLike } from 'node:fs';
+import { readCsv } from '@mandos-dev/csv';
 // import { readCsv } from '@mandos-dev/csv';
 
 type Parser<T> = (value: string) => T;
@@ -21,8 +23,8 @@ const agencyParsers: AgencyParsers = {
   cemv_support: parseString,
 };
 
-
-export function parseAgency(row: Record<string, string>): Agency {
+// TODO: row is type of string[] which is not correct, it because of problem with overloading for readCSV, clean it up later.
+export function parseAgency(row: Record<string, string> | string[]): Agency {
   const result: Partial<Agency> = {};
   const errors: string[] = [];
   for (const [key, value] of Object.entries(row)) {
@@ -39,17 +41,12 @@ export function parseAgency(row: Record<string, string>): Agency {
   }
   return result as Agency;
 }
-// export function readAgencyFeed(feedDir: string) {
-//   console.log(feedDir);
-// };
-//
 
-// export function parseAgencyFeed(csvText: string): Agency[] {
-//   const agencies: Agency[] = [];
+export async function readAgencyFeed(feedLocation: PathLike): Promise<Agency[]> {
+  const agencies: Agency[] = [];
+  for await (const row of readCsv(feedLocation, { header: true })) {
+    agencies.push(parseAgency(row));
+  }
 
-//   for (const row of readCsv(csvText, { header: true })) {
-//     agencies.push(row);
-//   }
-
-//   return agencies
-// }
+  return agencies
+};
