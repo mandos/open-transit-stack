@@ -1,4 +1,5 @@
 import { ParsedArgs } from "./parse-args.js";
+import { WriterFactory } from "./writer.js";
 
 export interface Command {
   name: string;
@@ -23,6 +24,7 @@ export interface Output {
 export interface Context {
   output: Output,
   args: ParsedArgs,
+  writerFactory: WriterFactory,
 }
 
 export const consoleOutput: Output = {

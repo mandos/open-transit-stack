@@ -3,9 +3,10 @@ import { validateFilesList } from '@mandos-dev/gtfs-validate';
 import { mkdir, mkdtemp } from 'fs/promises';
 import { tmpdir } from 'os';
 import path from 'path';
-import { Command, ExitCode, Output } from '../common.js';
+import { Command, Context, ExitCode, Output } from '../common.js';
 // import { parseAgencyFeed } from '@mandos-dev/gtfs-parser';
 import { readAgencyFeed } from '@mandos-dev/gtfs-parser';
+import { Agency } from '@mandos-dev/gtfs-core';
 
 type ShowOptions = {
   file: string,
@@ -17,6 +18,7 @@ export const showCommand: Command = {
   description: "Show information about zip package",
   usage: "ippo-cli show -f=[file_path]",
   commands: {},
+
   async run(ctx) {
     const output = ctx.output;
     try {
@@ -33,7 +35,7 @@ export const showCommand: Command = {
       if (!options.type) {
         showFiles(fileList, output);
       } else if (options.type == "agency") {
-        await showAgencyFeed(feedDir, output);
+        await showAgencyFeed(path.join(feedDir, 'agency.txt'), ctx);
       }
     } catch (err) {
       console.error(err);
@@ -56,6 +58,8 @@ function showFiles(fileList: string[], output: Output) {
   output.out("\n\n");
 }
 
-async function showAgencyFeed(feedDir: string, output: Output) {
-  output.out(JSON.stringify(await readAgencyFeed(feedDir), undefined, 4));
+async function showAgencyFeed(feedLocation: string, ctx: Context) {
+  const writer = ctx.writerFactory<Agency[]>();
+  const agencies = await readAgencyFeed(feedLocation);
+  await writer.write(agencies, ctx.output);
 }

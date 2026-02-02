@@ -48,5 +48,5 @@ export async function readAgencyFeed(feedLocation: PathLike): Promise<Agency[]> 
     agencies.push(parseAgency(row));
   }
 
-  return agencies
+  return agencies;
 };

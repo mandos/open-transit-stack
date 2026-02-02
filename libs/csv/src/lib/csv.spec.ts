@@ -3,6 +3,7 @@ import * as fs from 'node:fs/promises';
 
 function asyncLines(lines: string[]): AsyncIterable<string> {
   return {
+    // eslint-disable-next-line @typescript-eslint/require-await
     async *[Symbol.asyncIterator]() {
       for (const line of lines) {
         yield line;
@@ -25,6 +26,7 @@ export function mockReadLines(lines: string[]) {
 
 describe('parseCsv', () => {
   it('should parse lines without header', async () => {
+    // eslint-disable-next-line @typescript-eslint/require-await
     const lines = async function* (): AsyncIterableIterator<string> {
       yield 'moo,42,true';
       yield 'boo,99,false';
@@ -42,6 +44,7 @@ describe('parseCsv', () => {
   });
 
   it('should parse lines with header', async () => {
+    // eslint-disable-next-line @typescript-eslint/require-await
     const lines = async function* (): AsyncIterableIterator<string> {
       yield 'header1,header2,header3';
       yield 'moo,42,true';
@@ -78,8 +81,7 @@ describe.todo('readCsv', () => {
     mockReadLines(csvLines);
 
     const path = '/example.csv';
-    const data = readCsv(path, { header: true, });
-    await expect(data).resolves.toStrictEqual(expectedResult);
+    await expect(readCsv(path, { header: true, })).resolves.toStrictEqual(expectedResult);
   });
 
   it('should parse line without header', async () => {

@@ -4,6 +4,7 @@ import { cli } from './cli/cli.js';
 import { parseCliArgs } from './parse-args.js';
 import { router } from './router.js';
 import { CommandNotFoundError } from './commands.js';
+import { createWriterFactory } from './writer.js';
 
 async function main() {
   try {
@@ -11,6 +12,7 @@ async function main() {
     const ctx: Context = {
       args: parsedArgs,
       output: consoleOutput,
+      writerFactory: createWriterFactory('json'),
     };
     const cmd = router.route(cli, parsedArgs, ctx);
     const exitCode = await cmd.run(ctx);

@@ -3,16 +3,12 @@
   "compilerOptions": {
     "outDir": "dist",
     "module": "nodenext",
-    "types": [
-      "node"
-    ],
+    "types": ["node"],
     "rootDir": "src",
     "moduleResolution": "nodenext",
     "tsBuildInfoFile": "dist/tsconfig.app.tsbuildinfo"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
+  "include": ["src/**/*.ts"],
   "exclude": [
     "eslint.config.js",
     "eslint.config.cjs",
@@ -31,6 +27,9 @@
     "src/**/*.spec.jsx"
   ],
   "references": [
+    {
+      "path": "../../libs/gtfs/core/tsconfig.lib.json"
+    },
     {
       "path": "../../libs/gtfs/parser/tsconfig.lib.json"
     },
