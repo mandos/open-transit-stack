@@ -54,5 +54,5 @@ export type LanguageCode = string
 export type PhoneNumber = string
 export type Email = string
 export type URL = string
-export type Latitude = string
-export type Longitude = string
+export type Latitude = number
+export type Longitude = number

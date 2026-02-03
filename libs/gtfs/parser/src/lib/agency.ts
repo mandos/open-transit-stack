@@ -1,11 +1,7 @@
 import { Agency, CemvSupport } from '@mandos-dev/gtfs-core';
 import { PathLike } from 'node:fs';
 import { readCsv } from '@mandos-dev/csv';
-// import { readCsv } from '@mandos-dev/csv';
-
-type Parser<T> = (value: string) => T;
-
-const parseString: Parser<string> = v => v;
+import { Parser, parseString } from './parser.js';
 
 const parseCemvSupport: Parser<CemvSupport> = v => {
   if (v === "") { return undefined };
