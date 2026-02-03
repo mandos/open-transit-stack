@@ -23,11 +23,9 @@ describe('parseAgencyRow', () => {
       agency_phone: "777",
       agency_fare_url: "http://localhost/fare",
       agency_email: "moo@boo.org",
-      cemv_support: "0",
+      cemv_support: 0,
     };
-
     expect(parseAgency(input)).toStrictEqual(expected);
-
   });
 
   it('should return Agency where required fields are presented', () => {

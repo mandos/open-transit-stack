@@ -1,4 +1,4 @@
-import { Agency } from '@mandos-dev/gtfs-core';
+import { Agency, CemvSupport } from '@mandos-dev/gtfs-core';
 import { PathLike } from 'node:fs';
 import { readCsv } from '@mandos-dev/csv';
 // import { readCsv } from '@mandos-dev/csv';
@@ -7,8 +7,25 @@ type Parser<T> = (value: string) => T;
 
 const parseString: Parser<string> = v => v;
 
+const parseCemvSupport: Parser<CemvSupport> = v => {
+  if (v === "") { return undefined };
+  const num = Number(v);
+
+  if (!Number.isInteger(num)) {
+    throw new Error(`CemvSupport must be integer, got: ${num}`);
+  }
+
+  if (num === CemvSupport.Empty ||
+    num === CemvSupport.NotSupported ||
+    num == CemvSupport.Supported) {
+    return num;
+  }
+
+  throw new Error(`Value is not correct CemvSupport (0, 1, 2 or empty), got: ${v}`);
+};
+
 type AgencyParsers = {
-  [K in keyof Agency]: Parser<Agency[K]>;
+  [K in keyof Agency]-?: Parser<Agency[K]>;
 };
 
 const agencyParsers: AgencyParsers = {
@@ -20,20 +37,29 @@ const agencyParsers: AgencyParsers = {
   agency_phone: parseString,
   agency_fare_url: parseString,
   agency_email: parseString,
-  cemv_support: parseString,
+  cemv_support: parseCemvSupport,
 };
 
 // TODO: row is type of string[] which is not correct, it because of problem with overloading for readCSV, clean it up later.
 export function parseAgency(row: Record<string, string> | string[]): Agency {
+  if (Array.isArray(row)) {
+    throw new Error(`Parsing Agency works only on Records, not Arrays.`);
+  }
   const result: Partial<Agency> = {};
   const errors: string[] = [];
-  for (const [key, value] of Object.entries(row)) {
-    const parser = agencyParsers[key as keyof Agency];
-    if (parser === undefined) {
+  for (const key of Object.keys(row)) {
+    if (!(key in agencyParsers)) {
       errors.push(`Field "${key}" is not part of Agency specification.`);
-      continue;
-    };
-    result[key as keyof Agency] = parser(value);
+    }
+  };
+  for (const key of Object.keys(agencyParsers) as (keyof Agency)[]) {
+    const value = row[key];
+    if (value === undefined) continue;
+    try {
+      (result as Record<keyof Agency, unknown>)[key] = agencyParsers[key](value);
+    } catch (err) {
+      errors.push(`Field "${key}": ${(err as Error).message}`);
+    }
   }
 
   if (errors.length > 0) {
