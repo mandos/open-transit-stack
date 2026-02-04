@@ -1,8 +1,21 @@
-import { Latitude, Longitude } from "@mandos-dev/gtfs-core";
+import { Float, Latitude, Longitude } from "@mandos-dev/gtfs-core";
 
 export type Parser<T> = (value: string) => T;
 
 export const parseString: Parser<string> = v => v;
+
+export const parseBoolean: Parser<boolean> = v => {
+  if (v === "true"
+    || v === "1"
+    || v === "yes") {
+    return true;
+  } else if (v === "false"
+    || v === "0"
+    || v === "no") {
+    return false;
+  };
+  throw new Error(`Cannot recognize value as boolean, only allowed values are "true", "false", "1", "0", "yes", "no", got: ${v}`);
+}
 
 export const parseLatitude: Parser<Latitude> = v => {
   const val = Number(v);
@@ -25,3 +38,46 @@ export const parseLongitude: Parser<Longitude> = v => {
   }
   return val
 };
+
+// TODO: Is it problem that I overide this function? Maybe not if it used only in this lib internally. To verify if I export it as public API.
+export const parseFloat: Parser<Float> = v => {
+  const val = Number(v);
+  if (!Number.isFinite(val) || String(val) !== v.trim().replace(/\.0+$/, "")) throw new Error(`"${v}" is not a float type.`);
+  return val;
+};
+
+type FieldSpec<T> = {
+  parser: (value: string) => T;
+}
+
+export type ParserSpec<T> = {
+  // fields: FieldsSpec<T>,
+  fields: { [K in keyof T]?: FieldSpec<T[K]> },
+  build: (data: Partial<T>) => T;
+}
+
+export function parseSchema<T>(data: any, schema: ParserSpec<T>): T {
+
+  const errors: string[] = [];
+  // REVIEW: This validation is based on ParserSpec not Object's Schema, should be with Object schema (type/interface).
+  // I cannot think about different way but if I miss some fields in Spec this can fail without reason.
+  for (const field of Object.keys(data) as (keyof T)[]) {
+    if (!schema.fields[field]) {
+      errors.push(`${String(field)} is not in object's schema.`);
+    }
+  }
+
+  const parsedData: Partial<T> = {};
+  for (const [field, fieldSpec] of Object.entries(schema.fields) as [keyof T, FieldSpec<T[keyof T]>][]) {
+    // "optional" field missing in data
+    if (!data[field]) continue;
+    const parser = fieldSpec.parser;
+    try {
+      parsedData[field] = parser(data[field]);
+    } catch (err) {
+      errors.push((err instanceof Error) ? err.message : String(err));
+    }
+  }
+  if (errors.length) throw new Error(errors.join('\n'));
+  return schema.build(parsedData);
+}

@@ -1,4 +1,4 @@
-import { parseLatitude, parseLongitude } from "./parser.js";
+import { parseBoolean, parseLatitude, parseLongitude, parseFloat, ParserSpec, parseSchema } from "./parser.js";
 
 describe('parseLatitude', () => {
   it('should return error if is out of limit', () => {
@@ -26,5 +26,68 @@ describe('parseLogitude', () => {
 
   it('should return number', () => {
     expect(parseLongitude("10.123456789")).toStrictEqual(10.123456789);
+  });
+});
+
+describe('parseBoolean', () => {
+  it('should parse "false", "0", "no" as false', () => {
+    expect(parseBoolean("false")).toStrictEqual(false);
+    expect(parseBoolean("0")).toStrictEqual(false);
+    expect(parseBoolean("no")).toStrictEqual(false);
+  });
+  it('should parse "true", "1", "yes" as true', () => {
+    expect(parseBoolean("true")).toStrictEqual(true);
+    expect(parseBoolean("1")).toStrictEqual(true);
+    expect(parseBoolean("yes")).toStrictEqual(true);
+  });
+  it('other values than above should throw error', () => {
+    expect(() => parseBoolean("")).toThrowError(/recognize.*boolean.*value/);
+    expect(() => parseBoolean("boo")).toThrowError(/recognize.*boolean.*value/);
+    expect(() => parseBoolean("-10")).toThrowError(/recognize.*boolean.*value/);
+  });
+});
+
+describe('parseFloat', () => {
+  it('should parse correct float string', () => {
+    expect(parseFloat("10")).toStrictEqual(10);
+    expect(parseFloat(" 42.42 ")).toStrictEqual(42.42);
+    expect(parseFloat(" 42.00 ")).toStrictEqual(42);
+    expect(parseFloat(" 42.0042 ")).toStrictEqual(42.0042);
+  });
+  it('should throw error for wrong float', () => {
+    expect(() => parseFloat("fail")).toThrowError(/fail.*not.*float/);
+    expect(() => parseFloat("false")).toThrowError(/false.*not.*float/);;
+    expect(() => parseFloat("42.42.42")).toThrowError(/42\.42\.42.*not.*float/);
+  });
+});
+
+describe('parseSchema', () => {
+  interface Boo {
+    id: string,
+    isCorrect: boolean,
+    counter: number
+  }
+  const booSchema: ParserSpec<Boo> = {
+    fields: {
+      id: { parser: String },
+      isCorrect: { parser: parseBoolean },
+      counter: { parser: parseFloat },
+    },
+    build: (data) => {
+      return (data as Boo)
+    }
+  }
+  it('should return specific object if parse process is correct', () => {
+    const input = { id: "moo", isCorrect: "false", counter: "42" };
+    const expected: Boo = { id: "moo", isCorrect: false, counter: 42 };
+    expect(parseSchema(input, booSchema)).toStrictEqual(expected);
+  });
+  it('should throw error for fields not existed in parseSchema)', () => {
+    const input = { shouldNotBeHere: "fail", neitherIt: "fail" };
+    expect(() => parseSchema(input, booSchema)).toThrowError(/shouldNotBeHere.*is not.*neitherIt.*is not/s)
+  });
+  it('should throw error for fields which are not correctly parsed)', () => {
+    const input = { id: "moo", isCorrect: "fail", counter: "42.42.42" };
+    expect(() => parseSchema(input, booSchema)).toThrowError(/boolean.*float/s)
   });
 });

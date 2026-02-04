@@ -56,3 +56,5 @@ export type Email = string
 export type URL = string
 export type Latitude = number
 export type Longitude = number
+export type Float = number
+export type Integer = number
