@@ -1,0 +1,10 @@
+{
+  "name": "@mandos-dev/ippo-web-e2e",
+  "version": "0.0.1",
+  "private": true,
+  "nx": {
+    "implicitDependencies": [
+      "@mandos-dev/ippo-web"
+    ]
+  }
+}

@@ -18,7 +18,7 @@ export default [
     languageOptions: {
       // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
       parserOptions: {
-        project: ['apps/**/tsconfig.*?.json', 'libs/**/tsconfig.*?.json'],
+        project: ['apps/**/tsconfig*.json', 'libs/**/tsconfig*.json'],
       },
     },
     rules: {

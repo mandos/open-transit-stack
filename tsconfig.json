@@ -23,6 +23,12 @@
     },
     {
       "path": "./libs/csv"
+    },
+    {
+      "path": "./apps/ippo-web-e2e"
+    },
+    {
+      "path": "./apps/ippo-web"
     }
   ]
 }
