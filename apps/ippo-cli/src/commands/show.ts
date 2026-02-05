@@ -5,8 +5,8 @@ import { tmpdir } from 'os';
 import path from 'path';
 import { Command, Context, ExitCode, Output } from '../common.js';
 // import { parseAgencyFeed } from '@mandos-dev/gtfs-parser';
-import { readAgencyFeed } from '@mandos-dev/gtfs-parser';
-import { Agency } from '@mandos-dev/gtfs-core';
+import { readAgencyFeed, readStopsFeed } from '@mandos-dev/gtfs-parser';
+import { Agency, Stops } from '@mandos-dev/gtfs-core';
 
 type ShowOptions = {
   file: string,
@@ -36,6 +36,8 @@ export const showCommand: Command = {
         showFiles(fileList, output);
       } else if (options.type == "agency") {
         await showAgencyFeed(path.join(feedDir, 'agency.txt'), ctx);
+      } else if (options.type == "stops") {
+        await showStopsFeed(path.join(feedDir, 'stops.txt'), ctx);
       }
     } catch (err) {
       console.error(err);
@@ -62,4 +64,10 @@ async function showAgencyFeed(feedLocation: string, ctx: Context) {
   const writer = ctx.writerFactory<Agency[]>();
   const agencies = await readAgencyFeed(feedLocation);
   await writer.write(agencies, ctx.output);
+}
+
+async function showStopsFeed(feedLocation: string, ctx: Context) {
+  const writer = ctx.writerFactory<Stops[]>();
+  const stops = await readStopsFeed(feedLocation);
+  await writer.write(stops, ctx.output);
 }
