@@ -1,4 +1,4 @@
-import { UniqueID, Text, URL, TimeZone, LanguageCode, PhoneNumber, Email } from '../types.js'
+import { UniqueID, Text, URL, TimeZone, LanguageCode, PhoneNumber, Email } from '../types.js';
 
 // NOTE: Specification from: https://gtfs.org/documentation/schedule/reference/#agencytxt
 //

@@ -4,7 +4,7 @@ import { readCsv } from '@mandos-dev/csv';
 import { Parser, parseString } from './parser.js';
 
 const parseCemvSupport: Parser<CemvSupport> = v => {
-  if (v === "") { return undefined };
+  if (v === "") { return undefined; };
   const num = Number(v);
 
   if (!Number.isInteger(num)) {

@@ -15,7 +15,7 @@ export const parseBoolean: Parser<boolean> = v => {
     return false;
   };
   throw new Error(`Cannot recognize value as boolean, only allowed values are "true", "false", "1", "0", "yes", "no", got: ${v}`);
-}
+};
 
 export const parseLatitude: Parser<Latitude> = v => {
   const val = Number(v);
@@ -25,7 +25,7 @@ export const parseLatitude: Parser<Latitude> = v => {
   if (val < -90 || val > 90) {
     throw new Error(`Latitute should be between -90 and +90, got: ${val}.`);
   }
-  return val
+  return val;
 };
 
 export const parseLongitude: Parser<Longitude> = v => {
@@ -36,7 +36,7 @@ export const parseLongitude: Parser<Longitude> = v => {
   if (val < -180 || val > 180) {
     throw new Error(`Latitute should be between -180 and +180, got: ${val}.`);
   }
-  return val
+  return val;
 };
 
 // TODO: Is it problem that I overide this function? Maybe not if it used only in this lib internally. To verify if I export it as public API.
@@ -59,8 +59,8 @@ export const createEnumParser = <E extends EnumLike>(enumObj: E): Parser<EnumVal
       throw new Error(`Invalid enum value: ${val}`);
     }
     return num as EnumValue<E>;
-  }
-}
+  };
+};
 
 type FieldSpec<T> = {
   parser: (value: string) => T;

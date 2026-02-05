@@ -76,9 +76,9 @@ describe('parseSchema', () => {
       counter: { parser: parseFloat },
     },
     build: (data) => {
-      return (data as Boo)
+      return (data as Boo);
     }
-  }
+  };
   it('should return specific object if parse process is correct', () => {
     const input = { id: "moo", isCorrect: "false", counter: "42" };
     const expected: Boo = { id: "moo", isCorrect: false, counter: 42 };
@@ -86,11 +86,11 @@ describe('parseSchema', () => {
   });
   it('should throw error for fields not existed in parseSchema)', () => {
     const input = { shouldNotBeHere: "fail", neitherIt: "fail" };
-    expect(() => parseSchema(input, booSchema)).toThrowError(/shouldNotBeHere.*is not.*neitherIt.*is not/s)
+    expect(() => parseSchema(input, booSchema)).toThrowError(/shouldNotBeHere.*is not.*neitherIt.*is not/s);
   });
   it('should throw error for fields which are not correctly parsed)', () => {
     const input = { id: "moo", isCorrect: "fail", counter: "42.42.42" };
-    expect(() => parseSchema(input, booSchema)).toThrowError(/boolean.*float/s)
+    expect(() => parseSchema(input, booSchema)).toThrowError(/boolean.*float/s);
   });
 });
 
@@ -117,8 +117,8 @@ describe('parseEnum', () => {
       fields: {
         booEnum: { parser: createEnumParser(BooEnum) },
       },
-      build: (data) => { return data as FooObject }
-    }
+      build: (data) => { return data as FooObject; }
+    };
 
     expect(parseSchema({ booEnum: "0" }, fooSchema)).toStrictEqual({ booEnum: 0 });
 
