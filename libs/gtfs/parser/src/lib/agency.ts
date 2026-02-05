@@ -36,7 +36,7 @@ const agencyParsers: AgencyParsers = {
   cemv_support: parseCemvSupport,
 };
 
-// TODO: row is type of string[] which is not correct, it because of problem with overloading for readCSV, clean it up later.
+// REVIEW: row is type of string[] which is not correct, it because of problem with overloading for readCSV, clean it up later.
 export function parseAgency(row: Record<string, string> | string[]): Agency {
   if (Array.isArray(row)) {
     throw new Error(`Parsing Agency works only on Records, not Arrays.`);
@@ -57,7 +57,6 @@ export function parseAgency(row: Record<string, string> | string[]): Agency {
       errors.push(`Field "${key}": ${(err as Error).message}`);
     }
   }
-
   if (errors.length > 0) {
     throw new Error(errors.join('\n'));
   }
@@ -69,6 +68,5 @@ export async function readAgencyFeed(feedLocation: PathLike): Promise<Agency[]> 
   for await (const row of readCsv(feedLocation, { header: true })) {
     agencies.push(parseAgency(row));
   }
-
   return agencies;
 };

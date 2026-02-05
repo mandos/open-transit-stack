@@ -1,7 +1,7 @@
 import { parseAgency } from './agency.js';
 // import * as fs from 'node:fs/promises';
 
-describe('parseAgencyRow', () => {
+describe('parseAgency', () => {
   it('should return Agency where all fields are presented', () => {
     const input = {
       agency_id: "bea61a6d-b545-4395-acc8-97d98ced9691",
