@@ -1,4 +1,4 @@
-import { parseBoolean, parseLatitude, parseLongitude, parseFloat, ParserSpec, parseSchema } from "./parser.js";
+import { parseBoolean, parseLatitude, parseLongitude, parseFloat, ParserSpec, parseSchema, createEnumParser } from "./parser.js";
 
 describe('parseLatitude', () => {
   it('should return error if is out of limit', () => {
@@ -61,6 +61,8 @@ describe('parseFloat', () => {
   });
 });
 
+
+
 describe('parseSchema', () => {
   interface Boo {
     id: string,
@@ -89,5 +91,36 @@ describe('parseSchema', () => {
   it('should throw error for fields which are not correctly parsed)', () => {
     const input = { id: "moo", isCorrect: "fail", counter: "42.42.42" };
     expect(() => parseSchema(input, booSchema)).toThrowError(/boolean.*float/s)
+  });
+});
+
+
+describe('parseEnum', () => {
+  const BooEnum = {
+    Moo: 0,
+    Foo: 1,
+    Doo: 2,
+  } as const;
+  type BooEnum = typeof BooEnum[keyof typeof BooEnum];
+
+
+  it('should return correct parser', () => {
+    const parser = createEnumParser(BooEnum);
+    expect(parser("2")).toStrictEqual(BooEnum.Doo);
+  });
+
+  it('should be used in ParserSpec', () => {
+    interface FooObject {
+      booEnum: BooEnum,
+    }
+    const fooSchema: ParserSpec<FooObject> = {
+      fields: {
+        booEnum: { parser: createEnumParser(BooEnum) },
+      },
+      build: (data) => { return data as FooObject }
+    }
+
+    expect(parseSchema({ booEnum: "0" }, fooSchema)).toStrictEqual({ booEnum: 0 });
+
   });
 });

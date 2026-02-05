@@ -42,22 +42,36 @@ export const parseLongitude: Parser<Longitude> = v => {
 // TODO: Is it problem that I overide this function? Maybe not if it used only in this lib internally. To verify if I export it as public API.
 export const parseFloat: Parser<Float> = v => {
   const val = Number(v);
+  // NOTE: I verify if string are the same, but to do it, I need to trim and remove zeros from end, which is lost in translation
+  // REVIEW: Conside if string comparation is needed.
   if (!Number.isFinite(val) || String(val) !== v.trim().replace(/\.0+$/, "")) throw new Error(`"${v}" is not a float type.`);
   return val;
 };
+
+// REVIEW: I don't understand this magic
+type EnumLike = Record<string, number>;
+type EnumValue<E extends EnumLike> = E[keyof E];
+export const createEnumParser = <E extends EnumLike>(enumObj: E): Parser<EnumValue<E>> => {
+  return (val: string) => {
+    const num = Number(val);
+    // runtime guard
+    if (!Object.values(enumObj).includes(num as EnumValue<E>)) {
+      throw new Error(`Invalid enum value: ${val}`);
+    }
+    return num as EnumValue<E>;
+  }
+}
 
 type FieldSpec<T> = {
   parser: (value: string) => T;
 }
 
 export type ParserSpec<T> = {
-  // fields: FieldsSpec<T>,
   fields: { [K in keyof T]?: FieldSpec<T[K]> },
   build: (data: Partial<T>) => T;
 }
 
 export function parseSchema<T>(data: any, schema: ParserSpec<T>): T {
-
   const errors: string[] = [];
   // REVIEW: This validation is based on ParserSpec not Object's Schema, should be with Object schema (type/interface).
   // I cannot think about different way but if I miss some fields in Spec this can fail without reason.
