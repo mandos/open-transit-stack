@@ -149,6 +149,102 @@
           "store_path": "/nix/store/m9rrqw4kzly6qqg5m6d6qi2z5a6xvwyk-pre-commit-4.5.1"
         }
       }
+    },
+    "pulumi@3": {
+      "last_modified": "2026-01-23T17:20:52Z",
+      "resolved": "github:NixOS/nixpkgs/a1bab9e494f5f4939442a57a58d0449a109593fe#pulumi",
+      "source": "devbox-search",
+      "version": "3.192.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/jzk6rn87f6ric70zsgx489f9hj0ijby6-pulumi-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/jzk6rn87f6ric70zsgx489f9hj0ijby6-pulumi-3.192.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3hqk3an1a1yvkz4zb2brzk1h2bgbvf07-pulumi-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3hqk3an1a1yvkz4zb2brzk1h2bgbvf07-pulumi-3.192.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pzm71s5wgfgx0kw422hiz6m6iyi7grr7-pulumi-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pzm71s5wgfgx0kw422hiz6m6iyi7grr7-pulumi-3.192.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/gvm8vqdgh39k19vy4zfigkf7x0bsbam5-pulumi-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/gvm8vqdgh39k19vy4zfigkf7x0bsbam5-pulumi-3.192.0"
+        }
+      }
+    },
+    "pulumiPackages.pulumi-nodejs@3": {
+      "last_modified": "2026-01-23T17:20:52Z",
+      "resolved": "github:NixOS/nixpkgs/a1bab9e494f5f4939442a57a58d0449a109593fe#pulumiPackages.pulumi-nodejs",
+      "source": "devbox-search",
+      "version": "3.192.0",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/jfqki09l6p5k4xdhwyvqrssipsxdy1pz-pulumi-nodejs-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/jfqki09l6p5k4xdhwyvqrssipsxdy1pz-pulumi-nodejs-3.192.0"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/5s36q79pmh1cihikpzdjp9w7s03nslzx-pulumi-nodejs-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/5s36q79pmh1cihikpzdjp9w7s03nslzx-pulumi-nodejs-3.192.0"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/pf6p1vnixfvq6wcyay41b8v4kcb34xff-pulumi-nodejs-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/pf6p1vnixfvq6wcyay41b8v4kcb34xff-pulumi-nodejs-3.192.0"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/bc1vb1bpx6a07jsm94ig949m5vvjvjww-pulumi-nodejs-3.192.0",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/bc1vb1bpx6a07jsm94ig949m5vvjvjww-pulumi-nodejs-3.192.0"
+        }
+      }
     }
   }
 }

@@ -1,0 +1,7 @@
+name: ippo-infra
+description: Infrastructure for "ippo" web app
+runtime: nodejs
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
