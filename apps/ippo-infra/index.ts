@@ -1,9 +1,10 @@
-// import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-// import * as awsx from "@pulumi/awsx";
+import *  as pulumi from '@pulumi/pulumi';
+import { bucket } from './s3';
+import { ippoDistribution } from './cloudfront';
+import { cert } from './certificate';
+import { dns } from './dns';
 
-// Create an AWS resource (S3 Bucket)
-const bucket = new aws.s3.Bucket("ippo-web");
-
-// Export the name of the bucket
+export const url = pulumi.interpolate`https://${dns.name}`;
+export const cloudfrontDomain = ippoDistribution.domainName;
 export const bucketName = bucket.id;
+export const certificateArn = cert.arn;
