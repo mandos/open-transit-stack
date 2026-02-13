@@ -17,6 +17,10 @@ node_modules
 .settings/
 *.sublime-workspace
 
+# LLM
+.claude
+CLAUDE.local.md
+
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

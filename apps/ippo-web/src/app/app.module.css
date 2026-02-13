@@ -1,1 +1,17 @@
-/* Your styles goes here. */
+.toggleButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  padding: 8px 16px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggleButton:hover {
+  background: #f0f0f0;
+}
