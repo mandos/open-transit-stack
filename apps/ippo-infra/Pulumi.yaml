@@ -1,7 +1,9 @@
 name: ippo-infra
 description: Infrastructure for "ippo" web app
 runtime: nodejs
+backend:
+    url: "s3://infra-29087/ippo?region=eu-west-1&awssdk=v2&profile=Management-InfraDeployer"
 config:
-  pulumi:tags:
-    value:
-      pulumi:template: aws-typescript
+    pulumi:tags:
+        value:
+            pulumi:template: aws-typescript
