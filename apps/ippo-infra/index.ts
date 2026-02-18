@@ -1,4 +1,4 @@
-import *  as pulumi from '@pulumi/pulumi';
+import * as pulumi from '@pulumi/pulumi';
 import { bucket } from './s3';
 import { ippoDistribution } from './cloudfront';
 import { cert } from './certificate';

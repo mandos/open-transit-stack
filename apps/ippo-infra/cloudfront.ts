@@ -1,14 +1,14 @@
+import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
 import * as s3 from './s3';
 import { cert } from './certificate';
 
-const _default = new aws.cloudfront.OriginAccessControl('default', {
+const _defaultOAC = new aws.cloudfront.OriginAccessControl('default', {
   name: 'default',
   originAccessControlOriginType: 's3',
   signingBehavior: 'always',
   signingProtocol: 'sigv4',
 });
-
 
 export const ippoDistribution = new aws.cloudfront.Distribution('ippo', {
   enabled: true,
@@ -22,7 +22,7 @@ export const ippoDistribution = new aws.cloudfront.Distribution('ippo', {
   origins: [{
     domainName: s3.bucket.bucketDomainName,
     originId: 's3-ippo-web',
-    originAccessControlId: _default.id
+    originAccessControlId: _defaultOAC.id
   }],
   defaultCacheBehavior: {
     allowedMethods: ['HEAD', 'GET', 'OPTIONS'],
@@ -33,7 +33,7 @@ export const ippoDistribution = new aws.cloudfront.Distribution('ippo', {
       cookies: {
         forward: 'none',
       },
-      queryString: true,
+      queryString: false,
     }
   },
   restrictions: {
@@ -44,6 +44,25 @@ export const ippoDistribution = new aws.cloudfront.Distribution('ippo', {
   viewerCertificate: {
     acmCertificateArn: cert.arn,
     sslSupportMethod: 'sni-only',
-    // cloudfrontDefaultCertificate: true
   }
+});
+
+const cloudfrontPolicy = aws.iam.getPolicyDocumentOutput({
+  statements: [{
+    sid: 'AllowCloudFrontReadOnly',
+    effect: 'Allow',
+    principals: [{ type: 'Service', identifiers: ['cloudfront.amazonaws.com'] }],
+    actions: ['s3:GetObject'],
+    resources: [pulumi.interpolate`${s3.bucket.arn}/*`],
+    conditions: [{
+      test: 'StringEquals',
+      variable: 'AWS:SourceArn',
+      values: [ippoDistribution.arn],
+    }]
+  }]
+});
+
+new aws.s3.BucketPolicy('cloudfront-read', {
+  bucket: s3.bucket.id,
+  policy: cloudfrontPolicy.json
 });
