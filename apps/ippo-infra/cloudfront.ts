@@ -10,7 +10,7 @@ const _defaultOAC = new aws.cloudfront.OriginAccessControl('default', {
   signingProtocol: 'sigv4',
 });
 
-export const ippoDistribution = new aws.cloudfront.Distribution('ippo', {
+export const cloudfront = new aws.cloudfront.Distribution('ippo', {
   enabled: true,
   defaultRootObject: 'index.html',
   priceClass: 'PriceClass_100',
@@ -57,7 +57,7 @@ const cloudfrontPolicy = aws.iam.getPolicyDocumentOutput({
     conditions: [{
       test: 'StringEquals',
       variable: 'AWS:SourceArn',
-      values: [ippoDistribution.arn],
+      values: [cloudfront.arn],
     }]
   }]
 });

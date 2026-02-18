@@ -1,4 +1,4 @@
-import { ippoDistribution } from './cloudfront';
+import { cloudfront } from './cloudfront';
 import * as cloudflare from '@pulumi/cloudflare';
 
 export const dns = new cloudflare.DnsRecord(`ippo-web`, {
@@ -6,6 +6,6 @@ export const dns = new cloudflare.DnsRecord(`ippo-web`, {
   type: 'CNAME',
   ttl: 3600,
   zoneId: 'f4c015a828bb95b6f028f26a06765555',
-  content: ippoDistribution.domainName,
+  content: cloudfront.domainName,
   comment: 'project: ippo-web; deploy_engine: pulumi',
 });
