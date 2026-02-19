@@ -1,61 +1,69 @@
- # AWS TypeScript Pulumi Template
+# ippo-infra
 
- A minimal Pulumi template for provisioning AWS infrastructure using TypeScript. This template creates an Amazon S3 bucket and exports its name.
+AWS infrastructure for the ippo web application, managed with [Pulumi](https://www.pulumi.com/) (TypeScript).
 
- ## Prerequisites
+## Architecture
 
- - Pulumi CLI (>= v3): https://www.pulumi.com/docs/get-started/install/
- - Node.js (>= 14): https://nodejs.org/
- - AWS credentials configured (e.g., via `aws configure` or environment variables)
+```
+Cloudflare DNS (ippo.mandos.net.pl)
+        |
+        v
+AWS CloudFront (CDN, HTTPS)
+        |
+        v
+AWS S3 (private, static files)
+```
 
- ## Getting Started
+- **S3** bucket with all public access blocked
+- **CloudFront** distribution with Origin Access Control (OAC) for secure S3 access
+- **ACM** certificate (us-east-1) with DNS validation via Cloudflare
+- **Cloudflare** DNS CNAME pointing to CloudFront
+- **IAM** OIDC role for GitHub Actions deployment (no long-lived credentials)
 
- 1. Initialize a new Pulumi project:
+## Project Structure
 
-    ```bash
-    pulumi new aws-typescript
-    ```
+| File | Resources |
+|------|-----------|
+| `s3.ts` | S3 bucket, public access block |
+| `cloudfront.ts` | OAC, CloudFront distribution, CloudFront-only bucket policy |
+| `certificate.ts` | ACM certificate, DNS validation records |
+| `dns.ts` | Cloudflare CNAME record |
+| `github-deploy.ts` | GitHub OIDC provider, deploy IAM role and policies |
+| `index.ts` | Stack outputs |
 
-    Follow the prompts to set your:
-    - Project name
-    - Project description
-    - AWS region (defaults to `us-east-1`)
+## Prerequisites
 
- 2. Preview and deploy your infrastructure:
+- [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/) (>= v3)
+- Node.js (>= 18)
+- AWS credentials configured
+- Cloudflare API token (for DNS management)
 
-    ```bash
-    pulumi preview
-    pulumi up
-    ```
+## Usage
 
- 3. When you're finished, tear down your stack:
+```bash
+# Preview changes
+pulumi preview
 
-    ```bash
-    pulumi destroy
-    pulumi stack rm
-    ```
+# Deploy
+pulumi up
 
- ## Project Layout
+# View outputs
+pulumi stack output
 
- - `Pulumi.yaml` — Pulumi project and template metadata
- - `index.ts` — Main Pulumi program (creates an S3 bucket)
- - `package.json` — Node.js dependencies
- - `tsconfig.json` — TypeScript compiler options
+# Tear down
+pulumi destroy
+```
 
- ## Configuration
+## Stack Outputs
 
- | Key           | Description                             | Default     |
- | ------------- | --------------------------------------- | ----------- |
- | `aws:region`  | The AWS region to deploy resources into | `us-east-1` |
+| Output | Description |
+|--------|-------------|
+| `url` | Application URL |
+| `cloudfrontOutput` | CloudFront distribution ID and domain |
+| `bucketName` | S3 bucket name |
+| `certificateArn` | ACM certificate ARN |
+| `deployerRole` | GitHub Actions deploy role ARN |
 
- Use `pulumi config set <key> <value>` to customize configuration.
+## Scripts
 
- ## Next Steps
-
- - Extend `index.ts` to provision additional resources (e.g., VPCs, Lambda functions, DynamoDB tables).
- - Explore [Pulumi AWSX](https://www.pulumi.com/docs/reference/pkg/awsx/) for higher-level AWS components.
- - Consult the [Pulumi documentation](https://www.pulumi.com/docs/) for more examples and best practices.
-
- ## Getting Help
-
- If you encounter any issues or have suggestions, please open an issue in this repository.
+- `scripts/assume-role.sh` - Assume the GitHub deploy IAM role for local testing
