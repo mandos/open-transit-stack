@@ -1,9 +1,9 @@
 import * as pulumi from '@pulumi/pulumi';
-import { bucket } from './s3';
-import { cloudfront } from './cloudfront';
 import { cert } from './certificate';
+import { cloudfront } from './cloudfront';
 import { dns } from './dns';
 import { githubActionRole } from './github-deploy';
+import { bucket } from './s3';
 
 export const url = pulumi.interpolate`https://${dns.name}`;
 export const cloudfrontOutput = {
