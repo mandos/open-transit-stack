@@ -1,7 +1,7 @@
-import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
-import * as s3 from './s3';
+import * as pulumi from '@pulumi/pulumi';
 import { cert } from './certificate';
+import * as s3 from './s3';
 
 const _defaultOAC = new aws.cloudfront.OriginAccessControl('default', {
   name: 'default',

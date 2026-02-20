@@ -1,5 +1,5 @@
-import { cloudfront } from './cloudfront';
 import * as cloudflare from '@pulumi/cloudflare';
+import { cloudfront } from './cloudfront';
 
 export const dns = new cloudflare.DnsRecord(`ippo-web`, {
   name: 'ippo',

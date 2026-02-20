@@ -1,7 +1,7 @@
-import * as pulumi from '@pulumi/pulumi';
 import * as aws from '@pulumi/aws';
-import { bucket } from './s3';
+import * as pulumi from '@pulumi/pulumi';
 import { cloudfront } from './cloudfront';
+import { bucket } from './s3';
 
 const ghOidcProvider = new aws.iam.OpenIdConnectProvider('github', {
   url: 'https://token.actions.githubusercontent.com',
