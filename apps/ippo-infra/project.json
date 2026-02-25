@@ -1,0 +1,36 @@
+{
+  "name": "@mandos-dev/ippo-infra",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "pre-deploy": {
+      "executor": "nx:run-commands",
+      "outputs": [
+        "{projectRoot}/history/last-run.json"
+      ],
+      "options": {
+        "commands": [
+          "mkdir -p apps/ippo-infra/outputs && cd apps/ippo-infra && pulumi stack output --json > outputs/outputs.json"
+        ]
+      }
+    },
+    "deploy": {
+      "dependsOn": [
+        "pre-deploy"
+      ],
+      "executor": "nx:run-commands",
+      "inputs": [
+        {
+          "dependentTasksOutputFiles": "{projectRoot}/history/last-run.json"
+        },
+        "{projectRoot}/**/*"
+      ],
+      "cache": true,
+      "options": {
+        "commands": [
+          "cd apps/ippo-infra && pulumi up --yes --suppress-progress"
+        ]
+      },
+      "parallelism": false
+    }
+  }
+}
