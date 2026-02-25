@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* MapLibreMap component renders its own <div class="mapContainer"> */
 .mapContainer {
-  height: 1000px;
+  height: 100%;
 }

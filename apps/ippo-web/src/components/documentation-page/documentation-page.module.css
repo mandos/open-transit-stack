@@ -1,0 +1,17 @@
+.page {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+}
+
+.heading {
+  margin: 0 0 16px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.text {
+  margin: 0;
+  font-size: 16px;
+  color: #666;
+}

@@ -1,26 +1,34 @@
 import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
 
 import App from './app';
 
 describe('App', () => {
   it('should render successfully', () => {
     const { baseElement } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
+      <MemoryRouter>
+        <Routes>
+          <Route element={<App />}>
+            <Route index element={<div>Index</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>,
     );
     expect(baseElement).toBeTruthy();
   });
 
-  it('should have a greeting as the title', () => {
-    const { getAllByText } = render(
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>,
+  it('should render navigation links', () => {
+    const { getByText } = render(
+      <MemoryRouter>
+        <Routes>
+          <Route element={<App />}>
+            <Route index element={<div>Index</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>,
     );
-    expect(
-      getAllByText(new RegExp('Welcome @mandos-dev/ippo-web', 'gi')).length > 0,
-    ).toBeTruthy();
+    expect(getByText('Application')).toBeTruthy();
+    expect(getByText('Documentation')).toBeTruthy();
+    expect(getByText('GitHub')).toBeTruthy();
   });
 });
