@@ -5,11 +5,11 @@
     "pre-deploy": {
       "executor": "nx:run-commands",
       "outputs": [
-        "{projectRoot}/history/last-run.json"
+        "{projectRoot}/outputs/prod.json"
       ],
       "options": {
         "commands": [
-          "mkdir -p apps/ippo-infra/outputs && cd apps/ippo-infra && pulumi stack output --json > outputs/outputs.json"
+          "mkdir -p apps/ippo-infra/outputs && cd apps/ippo-infra && pulumi stack output --json > outputs/prod.json"
         ]
       }
     },
@@ -20,7 +20,7 @@
       "executor": "nx:run-commands",
       "inputs": [
         {
-          "dependentTasksOutputFiles": "{projectRoot}/history/last-run.json"
+          "dependentTasksOutputFiles": "{projectRoot}/outputs/prod.json"
         },
         "{projectRoot}/**/*"
       ],

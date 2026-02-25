@@ -1,0 +1,36 @@
+{
+  "name": "@mandos-dev/ippo-web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "prepare-envs": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "@mandos-dev/ippo-infra:deploy"
+      ],
+      "outputs": [
+        "{projectRoot}/envs"
+      ],
+      "options": {
+        "command": "{projectRoot}/scripts/prepare-envs.sh"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "build",
+        "@mandos-dev/ippo-infra:deploy",
+        "prepare-envs"
+      ],
+      "cache": true,
+      "options": {
+        "envFile": "{projectRoot}/envs/prod-infra.env",
+        "commands": [
+          "cat {projectRoot}/envs/prod-infra.env",
+          "aws s3 sync {projectRoot}/dist s3://$S3_BUCKET_NAME --delete",
+          "aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths '/*'"
+        ],
+        "parallel": false
+      }
+    }
+  }
+}
