@@ -1,10 +1,12 @@
+import { Outlet } from 'react-router-dom';
+import { DocsSidebar } from '../docs-sidebar/docs-sidebar';
 import styles from './documentation-page.module.css';
 
 export function DocumentationPage() {
   return (
     <div className={styles.page}>
-      <h1 className={styles.heading}>Documentation</h1>
-      <p className={styles.text}>Documentation is coming soon.</p>
+      <DocsSidebar />
+      <Outlet />
     </div>
   );
 }

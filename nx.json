@@ -1,10 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -13,26 +10,20 @@
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
   "depConstraints": [
     {
       "sourceTag": "type:core",
-      "onlyDependOnLibsWithTags": [
-        "type:core"
-      ]
+      "onlyDependOnLibsWithTags": ["type:core"]
     },
     {
       "sourceTag": "type:query",
-      "onlyDependOnLibsWithTags": [
-        "type:core"
-      ]
+      "onlyDependOnLibsWithTags": ["type:core"]
     },
     {
       "sourceTag": "type:io",
-      "onlyDependOnLibsWithTags": [
-        "type:core"
-      ]
+      "onlyDependOnLibsWithTags": ["type:core"]
     }
   ],
   "plugins": [
@@ -72,9 +63,7 @@
     },
     {
       "plugin": "@nx/vitest",
-      "exclude": [
-        "tests/e2e/**/*"
-      ],
+      "exclude": ["tests/e2e/**/*"],
       "options": {
         "testTargetName": "test",
         "ciTargetName": "test-ci",
@@ -94,26 +83,17 @@
           "targetName": "typecheck"
         }
       },
-      "exclude": [
-        "libs/csv/*"
-      ]
+      "exclude": ["libs/csv/*"]
     }
   ],
   "targetDefaults": {
     "test": {
-      "dependsOn": [
-        "^build"
-      ]
+      "dependsOn": ["^build"]
     },
     "@nx/esbuild:esbuild": {
       "cache": true,
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "generators": {
