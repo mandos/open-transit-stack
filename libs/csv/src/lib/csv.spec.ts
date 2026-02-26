@@ -1,4 +1,4 @@
-import { parseCsv, readCsv } from './csv.js';
+import { parseCsvLines, readCsv } from './csv.js';
 import * as fs from 'node:fs/promises';
 
 function asyncLines(lines: string[]): AsyncIterable<string> {
@@ -24,7 +24,7 @@ export function mockReadLines(lines: string[]) {
   } as any);
 }
 
-describe('parseCsv', () => {
+describe('parseCsvLines', () => {
   it('should parse lines without header', async () => {
     // eslint-disable-next-line @typescript-eslint/require-await
     const lines = async function* (): AsyncIterableIterator<string> {
@@ -37,7 +37,7 @@ describe('parseCsv', () => {
     ];
 
     const result: string[][] = [];
-    for await (const row of parseCsv(lines())) {
+    for await (const row of parseCsvLines(lines())) {
       result.push(row);
     }
     expect(result).toStrictEqual(expected);
@@ -55,7 +55,7 @@ describe('parseCsv', () => {
       { header1: 'boo', header2: '99', header3: 'false' },
     ];
     const result: Record<string, string>[] = [];
-    for await (const row of parseCsv(lines(), { header: true })) {
+    for await (const row of parseCsvLines(lines(), { header: true })) {
       result.push(row);
     }
     expect(result).toStrictEqual(expected);

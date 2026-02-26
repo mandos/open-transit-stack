@@ -1,5 +1,5 @@
 import { createReadStream, PathLike } from "node:fs";
-import { parseHeader, parseRow } from "./parser.js";
+import { parseHeader, parseRow, parseRowWithHeaders } from "./parser.js";
 import { createInterface } from "node:readline/promises";
 
 export type CsvOptions = { header: boolean };
@@ -17,7 +17,7 @@ export async function* readCsv(
     crlfDelay: Infinity,
   });
 
-  for await (const row of parseCsv(rl, options)) {
+  for await (const row of parseCsvLines(rl, options)) {
     yield row;
   }
 }
@@ -25,7 +25,7 @@ export async function* readCsv(
 // TODO: How to fix overloading with boolean? Issue with widening by TS compler.
 // export function parseCsv(lines: AsyncIterable<string>, options: { header: true }): AsyncIterableIterator<Record<string, string>>;
 // export function parseCsv(path: AsyncIterable<string>, options: { header: false }): AsyncIterableIterator<string[]>;
-export async function* parseCsv(lines: AsyncIterable<string>, options: CsvOptions = { header: false }): AsyncIterableIterator<Record<string, string> | string[]> {
+export async function* parseCsvLines(lines: AsyncIterable<string>, options: CsvOptions = { header: false }): AsyncIterableIterator<Record<string, string> | string[]> {
   let readHeader = false;
   let headers: string[] | null = null;
 
@@ -39,7 +39,7 @@ export async function* parseCsv(lines: AsyncIterable<string>, options: CsvOption
       continue;
     }
     if (headers) {
-      yield parseRow(line, headers);
+      yield parseRowWithHeaders(line, headers);
     } else {
       yield parseRow(line);
     }
