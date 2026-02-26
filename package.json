@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@mapcomponents/react-maplibre": "^1.8.5",
+    "fflate": "^0.8.2",
     "maplibre-gl": "^5.17.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

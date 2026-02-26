@@ -1,10 +1,23 @@
 .sidebar {
-  width: 320px;
+  position: relative;
   flex-shrink: 0;
   padding: 16px;
   background: #fafafa;
   border-right: 1px solid #e0e0e0;
   overflow-y: auto;
+}
+
+.resizeHandle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.resizeHandle:hover {
+  background: #ccc;
 }
 
 .heading {
@@ -13,8 +26,20 @@
   font-weight: 600;
 }
 
-.description {
-  margin: 0;
-  font-size: 14px;
-  color: #666;
+.fileInput {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.statusMessage {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #333;
+}
+
+.errorMessage {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #c00;
 }

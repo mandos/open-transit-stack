@@ -1,5 +1,9 @@
 {
   "name": "@mandos-dev/ippo-web",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "fflate": "*",
+    "@mandos-dev/gtfs-core": "*"
+  }
 }
