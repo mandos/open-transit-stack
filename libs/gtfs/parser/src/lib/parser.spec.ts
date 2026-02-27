@@ -121,6 +121,5 @@ describe('parseEnum', () => {
     };
 
     expect(parseSchema({ booEnum: "0" }, fooSchema)).toStrictEqual({ booEnum: 0 });
-
   });
 });

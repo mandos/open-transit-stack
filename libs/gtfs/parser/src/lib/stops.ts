@@ -1,7 +1,5 @@
 import { LocationType, StopAccess, Stops, WheelchairBoardingAll } from "@mandos-dev/gtfs-core";
 import { parseLatitude, parseLongitude, createEnumParser, ParserSpec, parseSchema } from "./parser.js";
-import { PathLike } from "node:fs";
-import { readCsv } from "@mandos-dev/csv";
 
 const stopsSpec: ParserSpec<Stops> = {
   fields: {
@@ -34,11 +32,3 @@ export function parseStops(row: Record<string, string> | string[]): Stops {
   }
   return parseSchema(row, stopsSpec);
 }
-
-export async function readStopsFeed(feedLocation: PathLike): Promise<Stops[]> {
-  const agencies: Stops[] = [];
-  for await (const row of readCsv(feedLocation, { header: true })) {
-    agencies.push(parseStops(row));
-  }
-  return agencies;
-};

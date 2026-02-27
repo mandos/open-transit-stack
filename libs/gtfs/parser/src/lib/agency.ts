@@ -1,6 +1,4 @@
 import { Agency, CemvSupport } from '@mandos-dev/gtfs-core';
-import { PathLike } from 'node:fs';
-import { readCsv } from '@mandos-dev/csv';
 import { Parser, parseString } from './parser.js';
 
 const parseCemvSupport: Parser<CemvSupport> = v => {
@@ -62,11 +60,3 @@ export function parseAgency(row: Record<string, string> | string[]): Agency {
   }
   return result as Agency;
 }
-
-export async function readAgencyFeed(feedLocation: PathLike): Promise<Agency[]> {
-  const agencies: Agency[] = [];
-  for await (const row of readCsv(feedLocation, { header: true })) {
-    agencies.push(parseAgency(row));
-  }
-  return agencies;
-};
