@@ -5,7 +5,7 @@ repos:
       hooks:
           - id: lint-fix
             name: lint-fix
-            entry: "nx affected:lint --base=HEAD^ --outputStyle=stream --fix --no-color"
+            entry: "nx affected:lint --base=master --outputStyle=stream --no-color"
             language: unsupported
             types_or: [javascript, jsx, ts, tsx]
             # require_serial: true
