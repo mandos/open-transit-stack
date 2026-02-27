@@ -4,7 +4,7 @@ import { parseCsvText } from '@mandos-dev/csv';
 import { parseStops } from '@mandos-dev/gtfs-parser';
 import { Stops } from '@mandos-dev/gtfs-core';
 
-type UploadState =
+export type UploadState =
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'error'; message: string }

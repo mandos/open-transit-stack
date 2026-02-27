@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import styles from './map-view.module.css';
 import {
   MapComponentsProvider,
   MapLibreMap,
+  MlGeoJsonLayer,
   useMap,
 } from '@mapcomponents/react-maplibre';
 import { StyleSpecification } from 'maplibre-gl';
+import { Stops } from '@mandos-dev/gtfs-core';
+import { FeatureCollection, Point } from 'geojson';
 
 const osmStyle: StyleSpecification = {
   version: 8,
@@ -76,8 +79,32 @@ function MapStyleToggle({
   );
 }
 
-export function MapView() {
+function stopsToGeoJson(stops: Stops[]): FeatureCollection<Point> {
+  return {
+    type: 'FeatureCollection',
+    features: stops
+      .filter((s) => s.stop_lat != null && s.stop_lon != null)
+      .map((s) => ({
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Point' as const,
+          coordinates: [s.stop_lon!, s.stop_lat!],
+        },
+        properties: {
+          stop_id: s.stop_id,
+          stop_name: s.stop_name ?? '',
+        },
+      })),
+  };
+}
+
+interface MapViewProps {
+  stops: Stops[];
+}
+
+export function MapView({ stops }: MapViewProps) {
   const [activeStyle, setActiveStyle] = useState<MapStyle>('osm');
+  const geojson = useMemo(() => stopsToGeoJson(stops), [stops]);
 
   return (
     <div className={styles.mapContainer}>
@@ -89,6 +116,18 @@ export function MapView() {
             zoom: 11,
           }}
         />
+        {geojson.features.length > 0 && (
+          <MlGeoJsonLayer
+            geojson={geojson}
+            type="circle"
+            paint={{
+              'circle-radius': 5,
+              'circle-color': '#e53935',
+              'circle-stroke-width': 1,
+              'circle-stroke-color': '#ffffff',
+            }}
+          />
+        )}
         <MapStyleToggle activeStyle={activeStyle} onToggle={setActiveStyle} />
       </MapComponentsProvider>
     </div>

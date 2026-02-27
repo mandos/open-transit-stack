@@ -1,5 +1,5 @@
 import { type ChangeEvent, useCallback, useRef, useState } from 'react';
-import { useGtfsUpload } from './use-gtfs-upload';
+import { type UploadState } from './use-gtfs-upload';
 import { StopsTable } from './stops-table';
 import styles from './sidebar.module.css';
 
@@ -7,14 +7,18 @@ const MIN_WIDTH = 200;
 const MAX_WIDTH = 600;
 const DEFAULT_WIDTH = 320;
 
-export function Sidebar() {
-  const { state, handleFile } = useGtfsUpload();
+interface SidebarProps {
+  state: UploadState;
+  onFile: (file: File) => void;
+}
+
+export function Sidebar({ state, onFile }: SidebarProps) {
   const [width, setWidth] = useState(DEFAULT_WIDTH);
   const dragging = useRef(false);
 
   function onFileChange(e: ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (file) handleFile(file);
+    if (file) onFile(file);
   }
 
   const onPointerDown = useCallback(
