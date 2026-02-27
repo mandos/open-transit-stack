@@ -1,8 +1,8 @@
-import type { ParsedStop } from './use-gtfs-upload';
 import styles from './stops-table.module.css';
+import { Stops } from '@mandos-dev/gtfs-core';
 
 interface StopsTableProps {
-  stops: ParsedStop[];
+  stops: Stops[];
 }
 
 export function StopsTable({ stops }: StopsTableProps) {

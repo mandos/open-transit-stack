@@ -35,6 +35,9 @@
   "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
   "references": [
     {
+      "path": "../../libs/gtfs/parser/tsconfig.lib.json"
+    },
+    {
       "path": "../../libs/csv/tsconfig.lib.json"
     },
     {

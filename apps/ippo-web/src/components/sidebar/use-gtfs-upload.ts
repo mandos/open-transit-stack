@@ -1,19 +1,14 @@
 import { useState } from 'react';
 import { unzipSync } from 'fflate';
 import { parseCsvText } from '@mandos-dev/csv';
-
-export interface ParsedStop {
-  stop_id: string;
-  stop_name: string;
-  stop_lat: string;
-  stop_lon: string;
-}
+import { parseStops } from '@mandos-dev/gtfs-parser';
+import { Stops } from '@mandos-dev/gtfs-core';
 
 type UploadState =
   | { status: 'idle' }
   | { status: 'loading' }
   | { status: 'error'; message: string }
-  | { status: 'success'; stops: ParsedStop[] };
+  | { status: 'success'; stops: Stops[] };
 
 function findStopsTxt(
   files: Record<string, Uint8Array>
@@ -49,12 +44,8 @@ export function useGtfsUpload() {
 
         const text = new TextDecoder().decode(stopsData);
         const records = parseCsvText(text);
-        const stops: ParsedStop[] = records.map((r) => ({
-          stop_id: r['stop_id'] ?? '',
-          stop_name: r['stop_name'] ?? '',
-          stop_lat: r['stop_lat'] ?? '',
-          stop_lon: r['stop_lon'] ?? '',
-        }));
+        // TODO: Add managing errors (parseStops can throw Exception if data cannot be parsed)
+        const stops: Stops[] = records.map(r => parseStops(r));
 
         setState({ status: 'success', stops });
       } catch (err) {
